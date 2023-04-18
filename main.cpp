@@ -30,11 +30,6 @@ int main()
 	// Declaring text object
 	Text title; // Chaos Game title
 	Text instruct; // lets user know what to do
-	Text mousePos;
-
-	mousePos.setFont(titleFont);
-	mousePos.setFillColor(sf::Color::White);
-	mousePos.setCharacterSize(24);
 
 	// Title processing
 	title.setFont(titleFont);
