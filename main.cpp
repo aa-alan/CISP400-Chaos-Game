@@ -67,6 +67,11 @@ int main()
 	// Chaos Game algorithm starts when 4 clicks have been registered
 	bool algorithmStart = false;
 
+	// Sets random colors to draw pixels with
+	float randomR = (25.5 * (rand() % 10 - 3) + 3);
+	float randomG = (25.5 * (rand() % 6 - 2) + 2);
+	float randomB = (25.5 * (rand() % 9 - 4) + 4);
+
 	while (window.isOpen())
 	{
 		while (window.pollEvent(event) && mouseClick < 4)
@@ -116,8 +121,8 @@ int main()
 			for (int i = 0; i < drawSpeed; i++)
 			{
 				int vertex = rand() % (MAX_VERTICES + 1);
-				float midpointX = (mousePosX[vertex] + mousePosX.back()) / 2.0;
-				float midpointY = (mousePosY[vertex] + mousePosY.back()) / 2.0;
+				float midpointX = (mousePosX[vertex] + mousePosX.back()) / 2;
+				float midpointY = (mousePosY[vertex] + mousePosY.back()) / 2;
 
 				// Add midpoint values to the back of the coordinate vectors
 				mousePosX.push_back(midpointX);
@@ -142,6 +147,11 @@ int main()
 		for (int i = 0; i < mousePosX.size(); i++)
 		{
 			point.setPosition(mousePosX[i], mousePosY[i]);
+			float colorProcessR = (mousePosY[i] / window.getSize().y) * randomR;
+			float colorProcessG = (mousePosY[i] / window.getSize().y) * randomG;
+			float colorProcessB = (mousePosY[i] / window.getSize().y) * randomB;
+			Color color(colorProcessR, colorProcessG, colorProcessB);
+			point.setFillColor(color);
 			window.draw(point);
 		}
 		window.display();
