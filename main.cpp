@@ -1,11 +1,16 @@
 #include <SFML/Graphics.hpp>
 #include <iostream>
+#include <cstdlib>
 
 using namespace sf;
 using namespace std;
 
 int main()
 {
+	// Seeding rand()
+	srand(time(0));
+	const int MAX_VERTICES = 2; // For rand(); for vector indexes 0-2
+
 	// Create a video mode object
 	VideoMode vm(1920, 1080);
 
@@ -19,7 +24,7 @@ int main()
 	Font titleFont;
 	if (!titleFont.loadFromFile("fonts/Roboto-BoldItalic.ttf"))
 	{
-		exit(0);
+		window.close();
 	}
 	
 	// Declaring text object
@@ -48,7 +53,7 @@ int main()
 	Font instructFont;
 	if (!instructFont.loadFromFile("fonts/Roboto-Thin.ttf"))
 	{
-		exit(0);
+		window.close();
 	}
 	instruct.setFont(instructFont);
 	instruct.setString("Click three times on the screen to set triangle vertices");
@@ -63,6 +68,10 @@ int main()
 	int mouseClick = 0;
 	vector<int> mousePosX;
 	vector<int> mousePosY;
+
+	// Chaos Game algorithm starts when 4 clicks have been registered
+	bool algorithmStart = false;
+
 	while (window.isOpen())
 	{
 		while (window.pollEvent(event) && mouseClick != 4)
@@ -88,11 +97,25 @@ int main()
 						// Remove text from screen
 						title.setFillColor(sf::Color::Black);
 						instruct.setFillColor(sf::Color::Black);
+						algorithmStart = true;
 					}
-				
 				}
 			}
 		}
+
+		// After 4 clicks, generate new points
+		if (algorithmStart)
+		{
+			// Generate midpoints
+			int vertex = rand() % (MAX_VERTICES + 1);
+			float midpointX = (mousePosX[vertex] + mousePosX.back()) / 2.0;
+			float midpointY = (mousePosY[vertex] + mousePosY.back()) / 2.0;
+
+			// Add midpoint values to the back of the coordinate vectors
+			mousePosX.push_back(midpointX);
+			mousePosY.push_back(midpointY);
+		}
+
 		if (Keyboard::isKeyPressed(Keyboard::Escape))
 		{
 			window.close();
@@ -104,7 +127,7 @@ int main()
 		window.draw(instruct);
 
 		// Display points
-		for (int i = 0; i < mouseClick; i++)
+		for (int i = 0; i < mousePosX.size(); i++)
 		{
 			
 		}
