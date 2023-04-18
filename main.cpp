@@ -69,7 +69,7 @@ int main()
 
 	while (window.isOpen())
 	{
-		while (window.pollEvent(event) && mouseClick != 4)
+		while (window.pollEvent(event) && mouseClick < 4)
 		{
 			if (event.type == sf::Event::MouseButtonPressed)
 			{
@@ -102,7 +102,7 @@ int main()
 		if (algorithmStart)
 		{
 			// Display text after time has passed
-			if (mousePosX.size() > 75000)
+			if (mousePosX.size() > 150000)
 			{
 				instruct.setFillColor(sf::Color::White);
 				instruct.setString("Hold the Escape [Esc] key to exit");
@@ -112,8 +112,8 @@ int main()
 			}
 
 			// Generate midpoints
-			int drawSpeed = 2 * (mousePosX.size() / 175) + 1; // adjust speed by vector size
-			for (int i = 0; i < drawSpeed % 10000; i++) // "% 10000" leads to smoother output
+			int drawSpeed = mousePosX.size() / 25 + 1; // adjust speed by vector size
+			for (int i = 0; i < drawSpeed; i++)
 			{
 				int vertex = rand() % (MAX_VERTICES + 1);
 				float midpointX = (mousePosX[vertex] + mousePosX.back()) / 2.0;
