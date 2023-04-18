@@ -110,7 +110,7 @@ int main()
 		}
 
 		// After 4 clicks, generate new points
-		if (algorithmStart && mousePosX.size() < 500000)
+		if (algorithmStart && mousePosX.size() < 1000000)
 		{
 			// Display text after time has passed
 			if (mousePosX.size() > 200000)
