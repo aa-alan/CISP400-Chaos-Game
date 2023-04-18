@@ -118,7 +118,7 @@ int main()
 
 			// Generate midpoints
 			int drawSpeed = 2 * (mousePosX.size() / 175) + 1; // adjust speed by vector size
-			for (int i = 0; i < drawSpeed % 10000; i++) // "% 5000" results in smoother output
+			for (int i = 0; i < drawSpeed % 10000; i++) // "% 10000" leads to smoother output
 			{
 				int vertex = rand() % (MAX_VERTICES + 1);
 				float midpointX = (mousePosX[vertex] + mousePosX.back()) / 2.0;
