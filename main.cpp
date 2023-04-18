@@ -9,7 +9,7 @@ int main()
 {
 	// Seeding rand()
 	srand(time(0));
-	const int MAX_VERTICES = 2; // For rand(); for vector indexes 0-2
+	const int MAX_VERTICES = 3; // For rand(); for vector indexes 0-2
 
 	// Create a video mode object
 	VideoMode vm(1920, 1080);
@@ -51,7 +51,7 @@ int main()
 		window.close();
 	}
 	instruct.setFont(instructFont);
-	instruct.setString("Click three times on the screen to set triangle vertices...");
+	instruct.setString("Click three times on the screen to set rectangle vertices...");
 	instruct.setCharacterSize(60);
 
 	// To center instructions at bottom of screen
@@ -64,12 +64,12 @@ int main()
 	vector<float> mousePosX;
 	vector<float> mousePosY;
 
-	// Chaos Game algorithm starts when 4 clicks have been registered
+	// Chaos Game algorithm starts when 5 clicks have been registered
 	bool algorithmStart = false;
 
 	while (window.isOpen())
 	{
-		while (window.pollEvent(event) && mouseClick < 4)
+		while (window.pollEvent(event) && mouseClick < 5)
 		{
 			if (event.type == sf::Event::MouseButtonPressed)
 			{
@@ -80,14 +80,14 @@ int main()
 					mousePosX.push_back(event.mouseButton.x);
 					mousePosY.push_back(event.mouseButton.y);
 					// Mouse click text decisions
-					if (mouseClick == 3)
+					if (mouseClick == 4)
 					{
 						instruct.setString("Click once more to start the algorithm!");
 						textRect = instruct.getLocalBounds();
 						instruct.setOrigin(textRect.left + textRect.width / 2.0, 0);
 						instruct.setPosition(window.getSize().x / 2.0, window.getSize().y / 1.2);
 					}
-					if (mouseClick > 3)
+					if (mouseClick > 4)
 					{
 						// Remove text from screen
 						title.setFillColor(sf::Color::Black);
@@ -115,7 +115,7 @@ int main()
 			int drawSpeed = mousePosX.size() / 25 + 1; // adjust speed by vector size
 			for (int i = 0; i < drawSpeed; i++)
 			{
-				int vertex = rand() % (MAX_VERTICES + 1);
+				int vertex = rand() % (MAX_VERTICES + 3);
 				float midpointX = (mousePosX[vertex] + mousePosX.back()) / 2.0;
 				float midpointY = (mousePosY[vertex] + mousePosY.back()) / 2.0;
 
