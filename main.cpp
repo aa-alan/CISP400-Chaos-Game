@@ -13,25 +13,43 @@ int main()
 	RenderWindow window(vm, "Chaos Game", Style::Default);
 
 	// Loading font to disk, exit program on failure to load font
-	Font font;
-	if (!font.loadFromFile("fonts/Roboto-Thin.ttf"))
+	Font titleFont;
+	if (!titleFont.loadFromFile("fonts/Roboto-BoldItalic.ttf"))
 	{
 		exit(0);
 	}
 	
 	// Declaring text object
-	Text text;
-	text.setFont(font);
-	text.setString("Chaos Game");
-	text.setCharacterSize(60);
+	Text title; // Chaos Game title
+	Text instruct; // lets user know what to do
+
+	// Title processing
+	title.setFont(titleFont);
+	title.setString("Chaos Game!");
+	title.setCharacterSize(80);
 	// Custom color setting
 	Color color(225, 225, 225);
-	text.setFillColor(color);
+	title.setFillColor(color);
 
 	// To center title at top of screen
-	FloatRect titleRect = text.getLocalBounds();
-	text.setOrigin(titleRect.left + titleRect.width / 2.0, 0);
-	text.setPosition(window.getSize().x / 2.0, 0);
+	FloatRect textRect = title.getLocalBounds();
+	title.setOrigin(textRect.left + textRect.width / 2.0, 0);
+	title.setPosition(window.getSize().x / 2.0, 0);
+
+	// Instruct processing
+	Font instructFont;
+	if (!instructFont.loadFromFile("fonts/Roboto-Thin.ttf"))
+	{
+		exit(0);
+	}
+	instruct.setFont(instructFont);
+	instruct.setString("Click three times on the screen to set triangle vertices");
+	instruct.setCharacterSize(60);
+
+	// To center instructions at bottom of screen
+	textRect = instruct.getLocalBounds();
+	instruct.setOrigin(textRect.left + textRect.width / 2.0, 0);
+	instruct.setPosition(window.getSize().x / 2.0, window.getSize().y / 1.2);
 	
 	while (window.isOpen())
 	{
@@ -42,7 +60,8 @@ int main()
 
 		// Frame processing
 		window.clear();
-		window.draw(text);
+		window.draw(title);
+		window.draw(instruct);
 		window.display();
 	}
 
