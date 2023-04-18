@@ -102,7 +102,7 @@ int main()
 		if (algorithmStart)
 		{
 			// Display text after time has passed
-			if (mousePosX.size() > 150000)
+			if (mousePosX.size() > 200000)
 			{
 				instruct.setFillColor(sf::Color::White);
 				instruct.setString("Hold the Escape [Esc] key to exit");
