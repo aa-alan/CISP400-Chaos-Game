@@ -23,10 +23,15 @@ int main()
 	Text text;
 	text.setFont(font);
 	text.setString("Chaos Game");
-	text.setCharacterSize(120);
+	text.setCharacterSize(60);
 	// Custom color setting
 	Color color(225, 225, 225);
 	text.setFillColor(color);
+
+	// To center title at top of screen
+	FloatRect titleRect = text.getLocalBounds();
+	text.setOrigin(titleRect.left + titleRect.width / 2.0, 0);
+	text.setPosition(window.getSize().x / 2.0, 0);
 	
 	while (window.isOpen())
 	{
