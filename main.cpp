@@ -56,7 +56,7 @@ int main()
 		window.close();
 	}
 	instruct.setFont(instructFont);
-	instruct.setString("Click three times on the screen to set triangle vertices");
+	instruct.setString("Click three times on the screen to set triangle vertices...");
 	instruct.setCharacterSize(60);
 
 	// To center instructions at bottom of screen
@@ -66,8 +66,8 @@ int main()
 	
 	// Setting up mouse click tracking
 	int mouseClick = 0;
-	vector<int> mousePosX;
-	vector<int> mousePosY;
+	vector<float> mousePosX;
+	vector<float> mousePosY;
 
 	// Chaos Game algorithm starts when 4 clicks have been registered
 	bool algorithmStart = false;
@@ -87,7 +87,7 @@ int main()
 					// Mouse click text decisions
 					if (mouseClick == 3)
 					{
-						instruct.setString("Click once more to ready the program");
+						instruct.setString("Click once more to start the algorithm!");
 						textRect = instruct.getLocalBounds();
 						instruct.setOrigin(textRect.left + textRect.width / 2.0, 0);
 						instruct.setPosition(window.getSize().x / 2.0, window.getSize().y / 1.2);
@@ -106,14 +106,28 @@ int main()
 		// After 4 clicks, generate new points
 		if (algorithmStart)
 		{
-			// Generate midpoints
-			int vertex = rand() % (MAX_VERTICES + 1);
-			float midpointX = (mousePosX[vertex] + mousePosX.back()) / 2.0;
-			float midpointY = (mousePosY[vertex] + mousePosY.back()) / 2.0;
+			// Display text after time has passed
+			if (mousePosX.size() > 75000)
+			{
+				instruct.setFillColor(sf::Color::White);
+				instruct.setString("Hold the Escape [Esc] key to exit");
+				textRect = instruct.getLocalBounds();
+				instruct.setOrigin(textRect.left + textRect.width / 2.0, 0);
+				instruct.setPosition(window.getSize().x / 2.0, window.getSize().y / 1.2);
+			}
 
-			// Add midpoint values to the back of the coordinate vectors
-			mousePosX.push_back(midpointX);
-			mousePosY.push_back(midpointY);
+			// Generate midpoints
+			int drawSpeed = 2 * (mousePosX.size() / 175) + 1; // adjust speed by vector size
+			for (int i = 0; i < drawSpeed % 10000; i++) // "% 5000" results in smoother output
+			{
+				int vertex = rand() % (MAX_VERTICES + 1);
+				float midpointX = (mousePosX[vertex] + mousePosX.back()) / 2.0;
+				float midpointY = (mousePosY[vertex] + mousePosY.back()) / 2.0;
+
+				// Add midpoint values to the back of the coordinate vectors
+				mousePosX.push_back(midpointX);
+				mousePosY.push_back(midpointY);
+			}
 		}
 
 		if (Keyboard::isKeyPressed(Keyboard::Escape))
@@ -126,10 +140,14 @@ int main()
 		window.draw(title);
 		window.draw(instruct);
 
+		// Will draw with this shape
+		RectangleShape point(sf::Vector2f(1, 1));
+
 		// Display points
 		for (int i = 0; i < mousePosX.size(); i++)
 		{
-			
+			point.setPosition(mousePosX[i], mousePosY[i]);
+			window.draw(point);
 		}
 		window.display();
 	}
