@@ -36,7 +36,7 @@ int main()
 	title.setString("Chaos Game!");
 	title.setCharacterSize(80);
 	// Custom color setting
-	Color color(225, 225, 225);
+	Color color(255, 43, 48);
 	title.setFillColor(color);
 
 	// To center title at top of screen
